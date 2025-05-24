@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nequi (Clon Educativo)</title>
+    <link rel="stylesheet" href="/fuente/estilos/estilo.css"> <!-- Ruta actualizada -->
+    <link rel="manifest" href="/manifiesto.json">
+    <meta name="theme-color" content="#EC008C"> <!-- color Nequi -->
+    <link rel="apple-touch-icon" href="/iconos/icono-app-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div id="contenedor-principal-app">
+        <header id="cabecera-app" class="oculto">
+            <!-- La cabecera para llenar dinámicamente (ej. botón atrás, título) -->
+        </header>
+        <main id="app">
+            <div class="pantalla-carga-inicial">
+                <img src="/iconos/nequi_logo_carga.png" alt="Nequi" width="120">
+                <p>Cargando tu Nequi...</p>
+            </div>
+        </main>
+        <nav id="navegacion-principal" class="oculto">
+            <!-- La navegación se llena dinámicamente -->
+        </nav>
+    </div>
+    <script type="module" src="/fuente/principal.js"></script> <!-- Ruta actualizada -->
+</body>
+</html>
