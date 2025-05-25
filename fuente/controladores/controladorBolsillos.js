@@ -1,6 +1,5 @@
 // Nequi/fuente/controladores/controladorBolsillos.js
 
-// Datos simulados en memoria (se perderán al recargar la página)
 let bolsillosSimulados = [
     { id: 1, nombre: "Ahorro Viaje ✈️", saldo: 50000, meta_ahorro: 200000 },
     { id: 2, nombre: "Regalo Mamá 🎁", saldo: 15000, meta_ahorro: 80000 },
@@ -8,89 +7,59 @@ let bolsillosSimulados = [
 let proximoIdBolsillo = 3;
 let saldoPrincipalSimulado = 100000; // Saldo principal de ejemplo
 
-console.log("[ControladorBolsillos] Inicializado con datos simulados.");
+console.log("[ControladorBolsillos] SIMULADO: Inicializado con datos.");
 
 export async function crearNuevoBolsillo(nombre, metaAhorro = null) {
-    console.log(`[ControladorBolsillos] Intentando crear bolsillo: Nombre=${nombre}, Meta=${metaAhorro}`);
+    console.log(`[CB SIM] Crear: ${nombre}, Meta: ${metaAhorro}`);
     if (!nombre || nombre.trim() === "") {
-        const mensaje = "El nombre del bolsillo no puede estar vacío.";
-        console.warn(`[ControladorBolsillos] Falló creación: ${mensaje}`);
-        return { exito: false, mensaje };
+        const m = "Nombre de bolsillo vacío."; console.warn(`[CB SIM] ${m}`);
+        return { exito: false, mensaje: m };
     }
-    const nuevoBolsillo = {
-        id: proximoIdBolsillo++,
-        nombre: nombre.trim(),
-        saldo: 0,
-        meta_ahorro: metaAhorro ? parseFloat(metaAhorro) : null
-    };
-    bolsillosSimulados.push(nuevoBolsillo);
-    const mensaje = `¡Bolsillo "${nuevoBolsillo.nombre}" creado (simulado)!`;
-    console.log(`[ControladorBolsillos] Éxito: ${mensaje}`, nuevoBolsillo);
-    return { exito: true, bolsillo: nuevoBolsillo, mensaje };
+    const nuevo = { id: proximoIdBolsillo++, nombre: nombre.trim(), saldo: 0, meta_ahorro: metaAhorro ? parseFloat(metaAhorro) : null };
+    bolsillosSimulados.push(nuevo);
+    const m = `¡Bolsillo "${nuevo.nombre}" creado (sim)!`; console.log(`[CB SIM] ${m}`, nuevo);
+    return { exito: true, bolsillo: nuevo, mensaje: m };
 }
 
 export async function obtenerMisBolsillos() {
-    console.log("[ControladorBolsillos] Obteniendo mis bolsillos (simulados)...", bolsillosSimulados);
+    console.log("[CB SIM] Obteniendo bolsillos...", bolsillosSimulados);
+    // await new Promise(resolve => setTimeout(resolve, 150)); // Simular delay
     return [...bolsillosSimulados];
 }
 
-export async function obtenerSaldoPrincipalSimulado() {
-   console.log("[ControladorBolsillos] Obteniendo saldo principal (simulado)...", saldoPrincipalSimulado);
+export async function obtenerSaldoPrincipalSimulado() { // La vista de bolsillos podría necesitar esto
+   console.log("[CB SIM] Obteniendo saldo principal...", saldoPrincipalSimulado);
    return saldoPrincipalSimulado;
 }
 
 export async function abonarABolsillo(idBolsillo, montoAAbonar) {
-    console.log(`[ControladorBolsillos] Intentando abonar $${montoAAbonar} al bolsillo ID: ${idBolsillo}`);
+    console.log(`[CB SIM] Abonar $${montoAAbonar} a bolsillo ID: ${idBolsillo}`);
     montoAAbonar = parseFloat(montoAAbonar);
-    const bolsillo = bolsillosSimulados.find(b => b.id === parseInt(idBolsillo));
+    const idx = bolsillosSimulados.findIndex(b => b.id === parseInt(idBolsillo));
 
-    if (!bolsillo) {
-        const mensaje = "Bolsillo no encontrado para abonar.";
-        console.warn(`[ControladorBolsillos] Falló abono: ${mensaje}`);
-        return { exito: false, mensaje };
-    }
-    if (isNaN(montoAAbonar) || montoAAbonar <= 0) {
-        const mensaje = "El monto a abonar es inválido.";
-        console.warn(`[ControladorBolsillos] Falló abono: ${mensaje}`);
-        return { exito: false, mensaje };
-    }
-    if (saldoPrincipalSimulado < montoAAbonar) {
-       const mensaje = "No tienes suficiente saldo principal (simulado).";
-       console.warn(`[ControladorBolsillos] Falló abono: ${mensaje}`);
-       return { exito: false, mensaje };
-    }
+    if (idx === -1) { const m = "Bolsillo no encontrado."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
+    if (isNaN(montoAAbonar) || montoAAbonar <= 0) { const m = "Monto a abonar inválido."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
+    if (saldoPrincipalSimulado < montoAAbonar) { const m = "Saldo principal simulado insuficiente."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
 
     saldoPrincipalSimulado -= montoAAbonar;
-    bolsillo.saldo += montoAAbonar;
-    const mensaje = `¡$${montoAAbonar.toLocaleString('es-CO')} abonados a "${bolsillo.nombre}" (simulado)! Saldo principal ahora: $${saldoPrincipalSimulado.toLocaleString('es-CO')}`;
-    console.log(`[ControladorBolsillos] Éxito abono: ${mensaje}`, bolsillo);
-    return { exito: true, mensaje };
+    bolsillosSimulados[idx].saldo += montoAAbonar;
+    const m = `¡$${montoAAbonar.toLocaleString('es-CO')} abonados a "${bolsillosSimulados[idx].nombre}" (sim)! Saldo principal: $${saldoPrincipalSimulado.toLocaleString('es-CO')}`;
+    console.log(`[CB SIM] ${m}`, bolsillosSimulados[idx]);
+    return { exito: true, mensaje: m };
 }
 
 export async function retirarDeBolsillo(idBolsillo, montoARetirar) {
-    console.log(`[ControladorBolsillos] Intentando retirar $${montoARetirar} del bolsillo ID: ${idBolsillo}`);
+    console.log(`[CB SIM] Retirar $${montoARetirar} de bolsillo ID: ${idBolsillo}`);
     montoARetirar = parseFloat(montoARetirar);
-    const bolsillo = bolsillosSimulados.find(b => b.id === parseInt(idBolsillo));
+    const idx = bolsillosSimulados.findIndex(b => b.id === parseInt(idBolsillo));
 
-    if (!bolsillo) {
-        const mensaje = "Bolsillo no encontrado para retirar.";
-        console.warn(`[ControladorBolsillos] Falló retiro: ${mensaje}`);
-        return { exito: false, mensaje };
-    }
-    if (isNaN(montoARetirar) || montoARetirar <= 0) {
-       const mensaje = "Monto a retirar inválido.";
-       console.warn(`[ControladorBolsillos] Falló retiro: ${mensaje}`);
-       return { exito: false, mensaje };
-   }
-    if (bolsillo.saldo < montoARetirar) {
-        const mensaje = "Saldo insuficiente en el bolsillo (simulado).";
-        console.warn(`[ControladorBolsillos] Falló retiro: ${mensaje}`);
-        return { exito: false, mensaje };
-    }
+    if (idx === -1) { const m = "Bolsillo no encontrado."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
+    if (isNaN(montoARetirar) || montoARetirar <= 0) { const m = "Monto a retirar inválido."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
+    if (bolsillosSimulados[idx].saldo < montoARetirar) { const m = "Saldo insuficiente en bolsillo (sim)."; console.warn(`[CB SIM] ${m}`); return { exito: false, mensaje: m };}
 
-    bolsillo.saldo -= montoARetirar;
+    bolsillosSimulados[idx].saldo -= montoARetirar;
     saldoPrincipalSimulado += montoARetirar;
-    const mensaje = `¡$${montoARetirar.toLocaleString('es-CO')} retirados de "${bolsillo.nombre}"! Saldo principal ahora: $${saldoPrincipalSimulado.toLocaleString('es-CO')}`;
-    console.log(`[ControladorBolsillos] Éxito retiro: ${mensaje}`, bolsillo);
-    return { exito: true, mensaje };
+    const m = `¡$${montoARetirar.toLocaleString('es-CO')} retirados de "${bolsillosSimulados[idx].nombre}" (sim)! Saldo principal: $${saldoPrincipalSimulado.toLocaleString('es-CO')}`;
+    console.log(`[CB SIM] ${m}`, bolsillosSimulados[idx]);
+    return { exito: true, mensaje: m };
 }
