@@ -1,0 +1,438 @@
+/* Nequi/fuente/estilos/estilo.css */
+
+/* ---- VARIABLES DE COLOR NEQUI ---- */
+:root {
+    --nequi-fucsia-principal: #EC008C;
+    --nequi-fucsia-oscuro: #bf0070; /* Para hover/active */
+    --nequi-morado-principal: #6A00FF;
+    --nequi-morado-oscuro: #4B0082;
+    --nequi-rosa-claro: #FDECF4;
+    --nequi-lila-suave: #EADFFD; /* Un lila muy claro para fondos o acentos */
+    --nequi-azul-acento: #00A9E0;
+    --nequi-naranja-alerta: #FF7062;
+
+    --texto-blanco: #FFFFFF;
+    --texto-oscuro-principal: #333333;
+    --texto-gris-secundario: #58585B;
+    --texto-gris-claro: #8E8E93;
+
+    --fondo-app: #f7f7fc; /* Un gris muy, muy claro, casi blanco */
+    --fondo-tarjeta: #FFFFFF;
+    --borde-suave: #E0E0E0;
+    --sombra-tarjeta: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    --radio-borde-grande: 16px; /* Para tarjetas y modales */
+    --radio-borde-medio: 8px;  /* Para inputs y elementos internos */
+    --radio-borde-botones: 25px; /* Botones redondeados Nequi */
+}
+
+/* ---- RESET BÁSICO Y ESTILOS GLOBALES ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: var(--fondo-app);
+    color: var(--texto-oscuro-principal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overscroll-behavior-y: contain; /* Prevenir pull-to-refresh en PWA */
+    -webkit-tap-highlight-color: transparent; /* Quitar resaltado azul en taps móviles */
+}
+
+#contenedor-principal-app {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden; /* Controlar scroll general */
+}
+
+/* ---- CABECERA DE LA APP ---- */
+#cabecera-app {
+    background-color: var(--nequi-fucsia-principal);
+    color: var(--texto-blanco);
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    min-height: 56px; /* Altura estándar para barras de app */
+    position: sticky; /* O fixed si está fuera del contenedor principal */
+    top: 0;
+    z-index: 100;
+}
+#cabecera-app.oculto { display: none; }
+#cabecera-app h2 {
+    margin: 0;
+    font-size: 1.15em;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: center;
+    /* Para centrar el título si hay un botón de atrás, quitamos margen de los botones */
+    margin-left: -40px; /* Aproximadamente el ancho del botón de atrás + padding */
+    padding-right: 40px; /* Espacio si hay un botón de acción a la derecha */
+}
+#cabecera-app .btn-atras,
+#cabecera-app .btn-accion-cabecera {
+    background: none;
+    border: none;
+    color: var(--texto-blanco);
+    font-size: 1.8em; /* Iconos grandes */
+    cursor: pointer;
+    padding: 5px; /* Área de toque */
+    line-height: 1;
+    z-index: 1; /* Para que estén sobre el título si se superponen */
+}
+#cabecera-app .btn-atras { margin-right: 10px; }
+#cabecera-app .btn-accion-cabecera { margin-left: auto; }
+
+
+/* ---- CONTENIDO PRINCIPAL DE LA VISTA ---- */
+main#app {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto; /* Scroll solo para el contenido principal */
+}
+
+/* ---- NAVEGACIÓN INFERIOR ---- */
+#navegacion-principal {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--fondo-tarjeta);
+    padding: 8px 5px;
+    border-top: 1px solid var(--borde-suave);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+#navegacion-principal.oculto { display: none; }
+#navegacion-principal button {
+    background: none;
+    border: none;
+    color: var(--texto-gris-secundario);
+    cursor: pointer;
+    font-size: 0.75em; /* Texto pequeño debajo del icono */
+    font-weight: 500;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px; /* Espacio entre icono y texto */
+    flex-basis: 0; /* Distribuir espacio equitativamente */
+    flex-grow: 1;
+}
+#navegacion-principal button img,
+#navegacion-principal button svg {
+    width: 26px;
+    height: 26px;
+    margin-bottom: 1px;
+    opacity: 0.7; /* Iconos un poco más suaves */
+}
+#navegacion-principal button.activo {
+    color: var(--nequi-fucsia-principal);
+}
+#navegacion-principal button.activo img,
+#navegacion-principal button.activo svg {
+    opacity: 1;
+    /* Podrías cambiar el color del SVG si es un SVG inline o con currentColor */
+}
+
+/* ---- ESTADOS DE CARGA Y MENSAJES ---- */
+.pantalla-carga-inicial, .mensaje-carga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--nequi-morado-principal);
+    height: 100%; /* Para centrar en la vista si es el único contenido */
+}
+.pantalla-carga-inicial img, .mensaje-carga img {
+    margin-bottom: 20px;
+    width: 80px; /* Ajustar tamaño del logo de carga */
+}
+.mensaje-vacio, .mensaje-error {
+    text-align: center;
+    padding: 30px 15px;
+    color: var(--texto-gris-secundario);
+    font-style: italic;
+}
+.mensaje-error {
+    color: var(--nequi-naranja-alerta);
+    font-style: normal;
+    font-weight: 500;
+}
+
+
+/* ---- BOTONES GENERALES ---- */
+.btn-primario {
+    background-color: var(--nequi-fucsia-principal);
+    color: var(--texto-blanco);
+    padding: 14px 24px;
+    border: none;
+    border-radius: var(--radio-borde-botones);
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block;
+}
+.btn-primario:hover { background-color: var(--nequi-fucsia-oscuro); }
+.btn-primario:active { transform: scale(0.98); }
+.btn-primario:disabled {
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
+}
+
+.btn-secundario {
+    background-color: var(--nequi-lila-suave);
+    color: var(--nequi-morado-principal);
+    padding: 12px 20px;
+    border: 1px solid var(--nequi-morado-principal);
+    border-radius: var(--radio-borde-botones);
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+.btn-secundario:hover { background-color: #dcc8fb; }
+
+.btn-enlace {
+    background: none;
+    border: none;
+    color: var(--nequi-fucsia-principal);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 5px;
+}
+
+
+/* ---- FORMULARIOS NEQUI ---- */
+.formulario-nequi {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Más espacio entre elementos del formulario */
+    padding: 20px;
+    background-color: var(--fondo-tarjeta);
+    border-radius: var(--radio-borde-grande);
+    box-shadow: var(--sombra-tarjeta);
+    max-width: 450px; /* Un poco más de ancho para formularios */
+    margin: 20px auto;
+}
+.formulario-nequi h2, .formulario-nequi h3 {
+    text-align: center;
+    color: var(--nequi-morado-principal);
+    margin-bottom: 10px;
+}
+.formulario-nequi .instruccion {
+    text-align: center;
+    color: var(--texto-gris-secundario);
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+.formulario-nequi input[type="text"],
+.formulario-nequi input[type="email"],
+.formulario-nequi input[type="password"],
+.formulario-nequi input[type="tel"],
+.formulario-nequi input[type="number"],
+.formulario-nequi textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-borde-medio);
+    font-size: 1em;
+    color: var(--texto-oscuro-principal);
+    background-color: var(--fondo-app); /* Fondo ligeramente diferente para inputs */
+}
+.formulario-nequi input:focus, .formulario-nequi textarea:focus {
+    outline: none;
+    border-color: var(--nequi-fucsia-principal);
+    box-shadow: 0 0 0 2px rgba(236, 0, 140, 0.2);
+}
+.formulario-nequi textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+.contenedor-centrado { /* Para login/registro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px); /* Ajustar según altura de cabecera/nav */
+    padding: 20px;
+}
+.logo-login {
+    width: 100px;
+    margin-bottom: 25px;
+}
+
+
+/* ---- LISTAS DE ITEMS (Bolsillos, Solicitudes) ---- */
+.lista-items-nequi {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* ---- TARJETAS (Bolsillos, Solicitudes) ---- */
+.tarjeta-bolsillo, .tarjeta-solicitud {
+    background-color: var(--fondo-tarjeta);
+    border-radius: var(--radio-borde-grande);
+    padding: 18px;
+    box-shadow: var(--sombra-tarjeta);
+    border-left: 5px solid transparent; /* Para estados */
+}
+/* ... (Estilos específicos para tarjeta-bolsillo y tarjeta-solicitud como los definidos antes) ... */
+
+
+/* ---- MODALES ---- */
+.modal-nequi-superposicion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Más oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0; /* Para animación */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-nequi-superposicion.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-nequi-contenido {
+    background-color: var(--fondo-tarjeta);
+    padding: 25px;
+    border-radius: var(--radio-borde-grande);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transform: scale(0.95); /* Para animación */
+    transition: transform 0.3s ease;
+}
+.modal-nequi-superposicion.visible .modal-nequi-contenido {
+    transform: scale(1);
+}
+.modal-nequi-contenido h3 { margin-top: 0; color: var(--nequi-morado-principal); text-align: center; }
+.modal-acciones { display: flex; justify-content: space-between; gap: 10px; margin-top: 15px; }
+.modal-acciones .btn-primario, .modal-acciones .btn-secundario { width: auto; flex-grow: 1; }
+
+
+/* ---- PESTAÑAS (Tabs para solicitudes) ---- */
+.tabs-solicitudes {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: var(--nequi-lila-suave);
+    border-radius: var(--radio-borde-botones); /* Pestañas redondeadas */
+    padding: 4px;
+}
+.tab-btn {
+    flex-grow: 1;
+    padding: 10px 15px;
+    text-align: center;
+    background: none; /* Fondo transparente por defecto */
+    border: none;
+    border-radius: var(--radio-borde-botones); /* Botones internos también redondeados */
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--nequi-morado-principal);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.tab-btn.activo {
+    background-color: var(--nequi-fucsia-principal);
+    color: var(--texto-blanco);
+    box-shadow: 0 2px 4px rgba(236, 0, 140, 0.3);
+}
+
+/* ---- ESTILOS DASHBOARD/PANTALLA PRINCIPAL ---- */
+.dashboard-saldo-container {
+    background: linear-gradient(135deg, var(--nequi-morado-principal) 0%, var(--nequi-fucsia-principal) 100%);
+    color: var(--texto-blanco);
+    padding: 30px 20px;
+    border-radius: var(--radio-borde-grande);
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.dashboard-saldo-container .etiqueta-saldo {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.dashboard-saldo-container .monto-saldo {
+    font-size: 2.5em; /* Saldo grande y prominente */
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.dashboard-acciones-rapidas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive */
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.dashboard-acciones-rapidas .accion-btn {
+    background-color: var(--fondo-tarjeta);
+    color: var(--nequi-morado-principal);
+    padding: 15px 10px;
+    border: none;
+    border-radius: var(--radio-borde-grande);
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: var(--sombra-tarjeta);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.dashboard-acciones-rapidas .accion-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+.dashboard-acciones-rapidas .accion-btn img,
+.dashboard-acciones-rapidas .accion-btn svg {
+    width: 32px; /* Iconos más grandes para acciones */
+    height: 32px;
+    /* Considerar usar filter para cambiar color de SVGs si son monocromáticos */
+}
+.seccion-movimientos h3 {
+    font-size: 1.1em;
+    color: var(--nequi-morado-principal);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--nequi-lila-suave);
+}
+
+/* Clases de utilidad */
+.oculto {
+    display: none !important;
+}
