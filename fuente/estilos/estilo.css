@@ -16,14 +16,14 @@
     --texto-gris-secundario: #58585B;
     --texto-gris-claro: #8E8E93;
 
-    --fondo-app: #f7f7fc; /* Un gris muy, muy claro, casi blanco */
+    --fondo-app: #f7f7fc;
     --fondo-tarjeta: #FFFFFF;
     --borde-suave: #E0E0E0;
     --sombra-tarjeta: 0 2px 8px rgba(0, 0, 0, 0.08);
 
-    --radio-borde-grande: 16px; /* Para tarjetas y modales */
-    --radio-borde-medio: 8px;  /* Para inputs y elementos internos */
-    --radio-borde-botones: 25px; /* Botones redondeados Nequi */
+    --radio-borde-grande: 16px;
+    --radio-borde-medio: 8px;
+    --radio-borde-botones: 25px;
 }
 
 /* ---- RESET BÁSICO Y ESTILOS GLOBALES ---- */
@@ -40,15 +40,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overscroll-behavior-y: contain; /* Prevenir pull-to-refresh en PWA */
-    -webkit-tap-highlight-color: transparent; /* Quitar resaltado azul en taps móviles */
+    overscroll-behavior-y: contain;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #contenedor-principal-app {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden; /* Controlar scroll general */
+    overflow: hidden;
 }
 
 /* ---- CABECERA DE LA APP ---- */
@@ -58,8 +58,8 @@ body {
     padding: 12px 15px;
     display: flex;
     align-items: center;
-    min-height: 56px; /* Altura estándar para barras de app */
-    position: sticky; /* O fixed si está fuera del contenedor principal */
+    min-height: 56px;
+    position: sticky;
     top: 0;
     z-index: 100;
 }
@@ -70,30 +70,36 @@ body {
     font-weight: 600;
     flex-grow: 1;
     text-align: center;
-    /* Para centrar el título si hay un botón de atrás, quitamos margen de los botones */
-    margin-left: -40px; /* Aproximadamente el ancho del botón de atrás + padding */
-    padding-right: 40px; /* Espacio si hay un botón de acción a la derecha */
+    /* Ajuste para centrar título con botón de atrás */
+    position: absolute; /* Permite centrado real */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 80px); /* Ancho menos espacio para botones */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #cabecera-app .btn-atras,
 #cabecera-app .btn-accion-cabecera {
     background: none;
     border: none;
     color: var(--texto-blanco);
-    font-size: 1.8em; /* Iconos grandes */
+    font-size: 1.8em;
     cursor: pointer;
-    padding: 5px; /* Área de toque */
+    padding: 5px;
     line-height: 1;
-    z-index: 1; /* Para que estén sobre el título si se superponen */
+    z-index: 1; /* Sobre el título */
+    position: relative; /* Para que z-index funcione bien */
 }
-#cabecera-app .btn-atras { margin-right: 10px; }
-#cabecera-app .btn-accion-cabecera { margin-left: auto; }
+#cabecera-app .btn-atras { margin-right: auto; /* Empuja el título */ }
+#cabecera-app .btn-accion-cabecera { margin-left: auto; /* Se posiciona a la derecha */ }
 
 
 /* ---- CONTENIDO PRINCIPAL DE LA VISTA ---- */
 main#app {
     flex-grow: 1;
     padding: 15px;
-    overflow-y: auto; /* Scroll solo para el contenido principal */
+    overflow-y: auto;
 }
 
 /* ---- NAVEGACIÓN INFERIOR ---- */
@@ -115,14 +121,14 @@ main#app {
     border: none;
     color: var(--texto-gris-secundario);
     cursor: pointer;
-    font-size: 0.75em; /* Texto pequeño debajo del icono */
+    font-size: 0.75em;
     font-weight: 500;
     padding: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px; /* Espacio entre icono y texto */
-    flex-basis: 0; /* Distribuir espacio equitativamente */
+    gap: 2px;
+    flex-basis: 0;
     flex-grow: 1;
 }
 #navegacion-principal button img,
@@ -130,7 +136,7 @@ main#app {
     width: 26px;
     height: 26px;
     margin-bottom: 1px;
-    opacity: 0.7; /* Iconos un poco más suaves */
+    opacity: 0.7;
 }
 #navegacion-principal button.activo {
     color: var(--nequi-fucsia-principal);
@@ -138,7 +144,6 @@ main#app {
 #navegacion-principal button.activo img,
 #navegacion-principal button.activo svg {
     opacity: 1;
-    /* Podrías cambiar el color del SVG si es un SVG inline o con currentColor */
 }
 
 /* ---- ESTADOS DE CARGA Y MENSAJES ---- */
@@ -150,11 +155,11 @@ main#app {
     padding: 40px 20px;
     text-align: center;
     color: var(--nequi-morado-principal);
-    height: 100%; /* Para centrar en la vista si es el único contenido */
+    height: 100%;
 }
 .pantalla-carga-inicial img, .mensaje-carga img {
     margin-bottom: 20px;
-    width: 80px; /* Ajustar tamaño del logo de carga */
+    width: 80px;
 }
 .mensaje-vacio, .mensaje-error {
     text-align: center;
@@ -192,12 +197,16 @@ main#app {
     color: #888888;
     cursor: not-allowed;
 }
+.btn-primario.btn-grande { /* Para botones como "Pedir Plata" */
+   padding: 15px 25px;
+   font-size: 1.1em;
+}
 
 .btn-secundario {
     background-color: var(--nequi-lila-suave);
     color: var(--nequi-morado-principal);
     padding: 12px 20px;
-    border: 1px solid var(--nequi-morado-principal);
+    border: 1px solid var(--nequi-morado-principal); /* Borde visible */
     border-radius: var(--radio-borde-botones);
     font-size: 1em;
     font-weight: 600;
@@ -205,6 +214,7 @@ main#app {
     transition: background-color 0.2s ease;
     width: 100%;
     box-sizing: border-box;
+    text-align: center;
 }
 .btn-secundario:hover { background-color: #dcc8fb; }
 
@@ -223,12 +233,12 @@ main#app {
 .formulario-nequi {
     display: flex;
     flex-direction: column;
-    gap: 18px; /* Más espacio entre elementos del formulario */
+    gap: 18px;
     padding: 20px;
     background-color: var(--fondo-tarjeta);
     border-radius: var(--radio-borde-grande);
     box-shadow: var(--sombra-tarjeta);
-    max-width: 450px; /* Un poco más de ancho para formularios */
+    max-width: 450px;
     margin: 20px auto;
 }
 .formulario-nequi h2, .formulario-nequi h3 {
@@ -254,7 +264,7 @@ main#app {
     border-radius: var(--radio-borde-medio);
     font-size: 1em;
     color: var(--texto-oscuro-principal);
-    background-color: var(--fondo-app); /* Fondo ligeramente diferente para inputs */
+    background-color: var(--fondo-app);
 }
 .formulario-nequi input:focus, .formulario-nequi textarea:focus {
     outline: none;
@@ -265,13 +275,22 @@ main#app {
     min-height: 80px;
     resize: vertical;
 }
+.formulario-nequi.seccion-pedir-dinero input[type="tel"], /* Específico para tu vista */
+.formulario-nequi.seccion-pedir-dinero input[type="number"] {
+    margin-bottom: 10px;
+}
+.formulario-nequi.seccion-pedir-dinero textarea {
+    margin-bottom: 15px;
+}
+
 .contenedor-centrado { /* Para login/registro */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 100px); /* Ajustar según altura de cabecera/nav */
+    min-height: calc(100vh - 120px); /* Ajustar si hay cabecera/nav visibles */
     padding: 20px;
+    text-align: center; /* Para centrar texto de <p> */
 }
 .logo-login {
     width: 100px;
@@ -283,7 +302,7 @@ main#app {
 .lista-items-nequi {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /* Espacio entre tarjetas */
 }
 
 
@@ -293,10 +312,124 @@ main#app {
     border-radius: var(--radio-borde-grande);
     padding: 18px;
     box-shadow: var(--sombra-tarjeta);
-    border-left: 5px solid transparent; /* Para estados */
+    border-left: 5px solid transparent; /* Para estados en solicitudes */
 }
-/* ... (Estilos específicos para tarjeta-bolsillo y tarjeta-solicitud como los definidos antes) ... */
 
+/* Estilos específicos para tarjeta-bolsillo */
+.tarjeta-bolsillo {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+.tarjeta-bolsillo-icono {
+    font-size: 2.2em; /* Para el emoji 🐖 o un SVG */
+    color: var(--nequi-fucsia-principal);
+    margin-top: 2px;
+    min-width: 30px; /* Asegurar espacio para el icono */
+    text-align: center;
+}
+.tarjeta-bolsillo-info {
+    flex-grow: 1;
+}
+.tarjeta-bolsillo-info h3 {
+    margin: 0 0 6px 0;
+    color: var(--nequi-morado-principal);
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.tarjeta-bolsillo-info .saldo {
+    font-weight: bold;
+    font-size: 1.05em;
+    color: var(--texto-oscuro-principal);
+    margin-bottom: 4px;
+}
+.tarjeta-bolsillo-info .meta {
+    font-size: 0.85em;
+    color: var(--texto-gris-secundario);
+}
+.tarjeta-bolsillo-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end; /* Alinea botones a la derecha */
+}
+.btn-accion-bolsillo { /* Usado en tu JS como 'btn-abonar' y 'btn-retirar' */
+    background-color: var(--nequi-fucsia-principal);
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: var(--radio-borde-botones);
+    font-size: 0.85em;
+    font-weight: 500;
+    cursor: pointer;
+    min-width: 100px;
+    text-align: center;
+}
+.btn-accion-bolsillo.btn-retirar { /* Clase específica para el botón de retirar */
+    background-color: transparent;
+    color: var(--nequi-fucsia-principal);
+    border: 1px solid var(--nequi-fucsia-principal);
+}
+
+
+/* Estilos específicos para tarjeta-solicitud */
+.tarjeta-solicitud .info-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+}
+.tarjeta-solicitud .quien strong { color: var(--nequi-morado-principal); }
+.tarjeta-solicitud .monto-solicitud strong {
+    color: var(--nequi-fucsia-principal);
+    font-size: 1.15em; /* Más grande el monto */
+    font-weight: 700;
+}
+.tarjeta-solicitud .mensaje {
+    font-style: italic;
+    color: var(--texto-gris-secundario);
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 3px solid var(--nequi-lila-suave);
+    word-break: break-word; /* Para mensajes largos */
+}
+.tarjeta-solicitud .fecha-solicitud, .tarjeta-solicitud .fecha-resolucion {
+    font-size: 0.8em;
+    color: var(--texto-gris-claro);
+    display: block;
+    margin-top: 4px;
+}
+ .tarjeta-solicitud .estado { /* Clase usada en el HTML generado */
+    font-weight: 500;
+    font-size: 0.9em;
+    margin-top: 5px;
+    text-transform: capitalize;
+}
+.tarjeta-solicitud.estado-aceptada { border-left-color: #4CAF50; }
+.tarjeta-solicitud.estado-rechazada { border-left-color: var(--nequi-naranja-alerta); }
+.tarjeta-solicitud.estado-pendiente { border-left-color: #FFC107; } /* Amarillo Nequi o similar */
+
+.tarjeta-solicitud .acciones { /* Para botones Pagar/Rechazar */
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; /* Botones a la derecha */
+}
+.tarjeta-solicitud .btn-accion { /* Clase usada en tu JS */
+    padding: 8px 18px;
+    border-radius: var(--radio-borde-botones);
+    border: 1px solid var(--nequi-fucsia-principal);
+    background-color: var(--fondo-tarjeta);
+    color: var(--nequi-fucsia-principal);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.tarjeta-solicitud .btn-accion.btn-pagar { /* Clase usada en tu JS */
+    background-color: var(--nequi-fucsia-principal);
+    color: var(--texto-blanco);
+}
 
 /* ---- MODALES ---- */
 .modal-nequi-superposicion {
@@ -305,38 +438,54 @@ main#app {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Más oscuro */
-    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Se cambia a flex con JS */
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    opacity: 0; /* Para animación */
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
 }
-.modal-nequi-superposicion.visible {
+.modal-nequi-superposicion.visible { /* Clase que añades con JS */
+    display: flex;
     opacity: 1;
-    visibility: visible;
 }
 .modal-nequi-contenido {
     background-color: var(--fondo-tarjeta);
-    padding: 25px;
+    padding: 25px 30px; /* Un poco más de padding */
     border-radius: var(--radio-borde-grande);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     width: 90%;
-    max-width: 400px;
+    max-width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    transform: scale(0.95); /* Para animación */
-    transition: transform 0.3s ease;
+    gap: 18px; /* Espacio entre elementos del modal */
+    transform: translateY(20px);
+    transition: transform 0.25s ease-in-out;
 }
 .modal-nequi-superposicion.visible .modal-nequi-contenido {
-    transform: scale(1);
+    transform: translateY(0);
 }
-.modal-nequi-contenido h3 { margin-top: 0; color: var(--nequi-morado-principal); text-align: center; }
-.modal-acciones { display: flex; justify-content: space-between; gap: 10px; margin-top: 15px; }
-.modal-acciones .btn-primario, .modal-acciones .btn-secundario { width: auto; flex-grow: 1; }
+.modal-nequi-contenido h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: var(--nequi-morado-principal);
+    text-align: center;
+    font-size: 1.3em;
+}
+.modal-acciones {
+    display: flex;
+    justify-content: space-between; /* Botones distribuidos */
+    gap: 12px;
+    margin-top: 15px;
+}
+.modal-acciones .btn-primario,
+.modal-acciones .btn-secundario {
+    width: auto; /* No ocupan todo el ancho */
+    flex-grow: 1; /* Para que se distribuyan si son 2 */
+    padding-top: 12px; /* Ajuste padding vertical */
+    padding-bottom: 12px;
+}
 
 
 /* ---- PESTAÑAS (Tabs para solicitudes) ---- */
@@ -344,29 +493,31 @@ main#app {
     display: flex;
     margin-bottom: 20px;
     background-color: var(--nequi-lila-suave);
-    border-radius: var(--radio-borde-botones); /* Pestañas redondeadas */
+    border-radius: var(--radio-borde-botones);
     padding: 4px;
+    overflow: hidden;
 }
-.tab-btn {
+.tab-btn { /* Clase usada en tu JS */
     flex-grow: 1;
-    padding: 10px 15px;
+    padding: 10px 12px;
     text-align: center;
-    background: none; /* Fondo transparente por defecto */
+    background: transparent;
     border: none;
-    border-radius: var(--radio-borde-botones); /* Botones internos también redondeados */
-    font-size: 0.95em;
+    border-radius: calc(var(--radio-borde-botones) - 4px); /* Para que encaje dentro */
+    font-size: 0.9em;
     font-weight: 600;
     color: var(--nequi-morado-principal);
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
+    outline: none; /* Quitar outline de foco */
 }
-.tab-btn.activo {
+.tab-btn.activo { /* Clase que añades con JS */
     background-color: var(--nequi-fucsia-principal);
     color: var(--texto-blanco);
-    box-shadow: 0 2px 4px rgba(236, 0, 140, 0.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* ---- ESTILOS DASHBOARD/PANTALLA PRINCIPAL ---- */
+/* ---- ESTILOS DASHBOARD/PANTALLA PRINCIPAL (Ejemplo de Paula) ---- */
 .dashboard-saldo-container {
     background: linear-gradient(135deg, var(--nequi-morado-principal) 0%, var(--nequi-fucsia-principal) 100%);
     color: var(--texto-blanco);
@@ -384,7 +535,7 @@ main#app {
     letter-spacing: 0.5px;
 }
 .dashboard-saldo-container .monto-saldo {
-    font-size: 2.5em; /* Saldo grande y prominente */
+    font-size: 2.5em;
     font-weight: 700;
     margin: 0;
     letter-spacing: -1px;
@@ -392,17 +543,18 @@ main#app {
 
 .dashboard-acciones-rapidas {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive */
+    /* Ajustar para 2 columnas en móvil y más en pantallas grandes si se desea */
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas por defecto */
     gap: 15px;
     margin-bottom: 25px;
 }
-.dashboard-acciones-rapidas .accion-btn {
+.dashboard-acciones-rapidas .accion-btn { /* Clase usada en el HTML de vistaPrincipal */
     background-color: var(--fondo-tarjeta);
     color: var(--nequi-morado-principal);
     padding: 15px 10px;
     border: none;
     border-radius: var(--radio-borde-grande);
-    font-size: 0.9em;
+    font-size: 0.85em; /* Ajustar tamaño de texto de botones de acción */
     font-weight: 600;
     cursor: pointer;
     text-align: center;
@@ -413,6 +565,7 @@ main#app {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    min-height: 90px; /* Altura mínima para que se vean bien */
 }
 .dashboard-acciones-rapidas .accion-btn:hover {
     transform: translateY(-3px);
@@ -420,11 +573,10 @@ main#app {
 }
 .dashboard-acciones-rapidas .accion-btn img,
 .dashboard-acciones-rapidas .accion-btn svg {
-    width: 32px; /* Iconos más grandes para acciones */
-    height: 32px;
-    /* Considerar usar filter para cambiar color de SVGs si son monocromáticos */
+    width: 30px; /* Ajustar tamaño de iconos de acción */
+    height: 30px;
 }
-.seccion-movimientos h3 {
+.seccion-movimientos h3 { /* Usado en vistaPrincipal */
     font-size: 1.1em;
     color: var(--nequi-morado-principal);
     margin-bottom: 15px;
