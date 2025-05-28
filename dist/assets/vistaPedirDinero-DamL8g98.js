@@ -1,0 +1,9 @@
+import{c as d}from"./controladorSolicitudes-C0hB-ihv.js";const i=document.getElementById("cabecera-app");function u(r,l){console.log("Renderizando vistaPedirDinero..."),i.innerHTML='<button class="btn-atras" data-ruta="/principal">←</button><h2>Pedir Plata</h2>',i.classList.remove("oculto"),document.querySelector("#cabecera-app .btn-atras").addEventListener("click",t=>l(t.target.dataset.ruta)),r.innerHTML=`
+        <div class="formulario-nequi seccion-pedir-dinero">
+            <p class="instruccion">¿A quién le vas a pedir y cuánto?</p>
+            <input type="tel" id="telefono-solicitado-form" placeholder="Celu Nequi de tu amigo(a)" inputmode="numeric" required>
+            <input type="number" id="monto-solicitado-form" placeholder="Cuánto necesitas ($)" inputmode="numeric" step="any" required>
+            <textarea id="mensaje-solicitud-form" placeholder="Mensaje (opcional, ej: Pa' las onces)"></textarea>
+            <button id="btn-enviar-peticion" class="btn-primario btn-grande">Pedir Plata</button>
+        </div>
+    `;const e=document.getElementById("btn-enviar-peticion");e.addEventListener("click",async()=>{const t=document.getElementById("telefono-solicitado-form").value.trim(),n=document.getElementById("monto-solicitado-form").value,c=document.getElementById("mensaje-solicitud-form").value.trim();if(!t||!n){alert("El celu y el monto son obligatorios, ¡no te hagas!");return}const o=parseFloat(n);if(isNaN(o)||o<=0){alert("El monto no es válido, revisa porfa.");return}e.disabled=!0,e.textContent="Enviando Petición...";const a=await d(t,o,c);alert(a.mensaje),e.disabled=!1,e.textContent="Pedir Plata",a.exito&&(document.getElementById("telefono-solicitado-form").value="",document.getElementById("monto-solicitado-form").value="",document.getElementById("mensaje-solicitud-form").value="")})}export{u as renderizarPedirDinero};

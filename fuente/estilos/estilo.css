@@ -24,6 +24,12 @@
     --radio-borde-grande: 16px;
     --radio-borde-medio: 8px;
     --radio-borde-botones: 25px;
+
+    /* Tamaños de fuente base para responsividad */
+    --font-size-base: 16px; 
+    --font-size-small: 0.85em;
+    --font-size-medium: 1em;
+    --font-size-large: 1.15em;
 }
 
 /* ---- RESET BÁSICO Y ESTILOS GLOBALES ---- */
@@ -31,6 +37,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base); 
 }
 
 body {
@@ -42,13 +52,14 @@ body {
     min-height: 100vh;
     overscroll-behavior-y: contain;
     -webkit-tap-highlight-color: transparent;
+    font-size: var(--font-size-medium); 
 }
 
 #contenedor-principal-app {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
 /* ---- CABECERA DE LA APP ---- */
@@ -58,48 +69,65 @@ body {
     padding: 12px 15px;
     display: flex;
     align-items: center;
-    min-height: 56px;
-    position: sticky;
+    min-height: 56px; 
+    position: sticky; 
     top: 0;
+    left: 0; 
+    right: 0; 
     z-index: 100;
 }
 #cabecera-app.oculto { display: none; }
-#cabecera-app h2 {
+
+#cabecera-app h2 { 
     margin: 0;
-    font-size: 1.15em;
+    font-size: var(--font-size-large);
     font-weight: 600;
     flex-grow: 1;
     text-align: center;
-    /* Ajuste para centrar título con botón de atrás */
-    position: absolute; /* Permite centrado real */
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 80px); /* Ancho menos espacio para botones */
+    width: calc(100% - 100px); 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#cabecera-app .logo-cabecera-nequi img {
+    height: 30px;
+    display: block;
+}
+#cabecera-app .saludo-cabecera {
+    font-weight: 600;
+    margin-right: auto; 
+    font-size: var(--font-size-medium);
+}
+#cabecera-app .acciones-cabecera-principal {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; 
+}
 #cabecera-app .btn-atras,
-#cabecera-app .btn-accion-cabecera {
+#cabecera-app .btn-accion-cabecera,
+#cabecera-app .acciones-cabecera-principal button {
     background: none;
     border: none;
     color: var(--texto-blanco);
-    font-size: 1.8em;
+    font-size: 1.6em; 
     cursor: pointer;
     padding: 5px;
     line-height: 1;
-    z-index: 1; /* Sobre el título */
-    position: relative; /* Para que z-index funcione bien */
+    z-index: 1; 
+    position: relative;
 }
-#cabecera-app .btn-atras { margin-right: auto; /* Empuja el título */ }
-#cabecera-app .btn-accion-cabecera { margin-left: auto; /* Se posiciona a la derecha */ }
-
+#cabecera-app .btn-atras { 
+    margin-right: 10px; 
+}
 
 /* ---- CONTENIDO PRINCIPAL DE LA VISTA ---- */
 main#app {
     flex-grow: 1;
     padding: 15px;
-    overflow-y: auto;
+    overflow-y: auto; 
 }
 
 /* ---- NAVEGACIÓN INFERIOR ---- */
@@ -110,18 +138,21 @@ main#app {
     padding: 8px 5px;
     border-top: 1px solid var(--borde-suave);
     box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-    position: sticky;
+    position: sticky; 
     bottom: 0;
+    left: 0; 
+    right: 0; 
     width: 100%;
     z-index: 100;
 }
 #navegacion-principal.oculto { display: none; }
+
 #navegacion-principal button {
     background: none;
     border: none;
     color: var(--texto-gris-secundario);
     cursor: pointer;
-    font-size: 0.75em;
+    font-size: 0.8em; 
     font-weight: 500;
     padding: 4px;
     display: flex;
@@ -130,13 +161,21 @@ main#app {
     gap: 2px;
     flex-basis: 0;
     flex-grow: 1;
+    text-align: center; 
 }
 #navegacion-principal button img,
 #navegacion-principal button svg {
-    width: 26px;
-    height: 26px;
-    margin-bottom: 1px;
-    opacity: 0.7;
+    width: 28px; /* AUMENTADO */
+    height: 28px; /* AUMENTADO */
+    margin-bottom: 3px; 
+    opacity: 0.6; 
+    fill: currentColor; 
+    transition: opacity 0.2s ease, transform 0.2s ease; 
+}
+#navegacion-principal button:hover img,
+#navegacion-principal button:hover svg {
+    opacity: 0.85; 
+    transform: scale(1.1); 
 }
 #navegacion-principal button.activo {
     color: var(--nequi-fucsia-principal);
@@ -144,6 +183,7 @@ main#app {
 #navegacion-principal button.activo img,
 #navegacion-principal button.activo svg {
     opacity: 1;
+    transform: scale(1); 
 }
 
 /* ---- ESTADOS DE CARGA Y MENSAJES ---- */
@@ -155,7 +195,7 @@ main#app {
     padding: 40px 20px;
     text-align: center;
     color: var(--nequi-morado-principal);
-    height: 100%;
+    height: 100%; 
 }
 .pantalla-carga-inicial img, .mensaje-carga img {
     margin-bottom: 20px;
@@ -166,6 +206,7 @@ main#app {
     padding: 30px 15px;
     color: var(--texto-gris-secundario);
     font-style: italic;
+    font-size: var(--font-size-small);
 }
 .mensaje-error {
     color: var(--nequi-naranja-alerta);
@@ -181,14 +222,14 @@ main#app {
     padding: 14px 24px;
     border: none;
     border-radius: var(--radio-borde-botones);
-    font-size: 1em;
+    font-size: var(--font-size-medium);
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    display: inline-block;
+    display: inline-block; 
 }
 .btn-primario:hover { background-color: var(--nequi-fucsia-oscuro); }
 .btn-primario:active { transform: scale(0.98); }
@@ -197,18 +238,18 @@ main#app {
     color: #888888;
     cursor: not-allowed;
 }
-.btn-primario.btn-grande { /* Para botones como "Pedir Plata" */
-   padding: 15px 25px;
-   font-size: 1.1em;
+.btn-primario.btn-grande {
+   padding: 16px 28px; 
+   font-size: var(--font-size-large);
 }
 
 .btn-secundario {
     background-color: var(--nequi-lila-suave);
     color: var(--nequi-morado-principal);
     padding: 12px 20px;
-    border: 1px solid var(--nequi-morado-principal); /* Borde visible */
+    border: 1px solid var(--nequi-morado-principal);
     border-radius: var(--radio-borde-botones);
-    font-size: 1em;
+    font-size: var(--font-size-medium);
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -224,7 +265,7 @@ main#app {
     color: var(--nequi-fucsia-principal);
     text-decoration: underline;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: var(--font-size-small);
     padding: 5px;
 }
 
@@ -238,18 +279,19 @@ main#app {
     background-color: var(--fondo-tarjeta);
     border-radius: var(--radio-borde-grande);
     box-shadow: var(--sombra-tarjeta);
-    max-width: 450px;
-    margin: 20px auto;
+    max-width: 450px; 
+    margin: 20px auto; 
 }
 .formulario-nequi h2, .formulario-nequi h3 {
     text-align: center;
     color: var(--nequi-morado-principal);
     margin-bottom: 10px;
+    font-size: 1.4em; 
 }
 .formulario-nequi .instruccion {
     text-align: center;
     color: var(--texto-gris-secundario);
-    font-size: 0.9em;
+    font-size: var(--font-size-small);
     margin-bottom: 5px;
 }
 .formulario-nequi input[type="text"],
@@ -257,16 +299,21 @@ main#app {
 .formulario-nequi input[type="password"],
 .formulario-nequi input[type="tel"],
 .formulario-nequi input[type="number"],
+.formulario-nequi input[type="date"],
+.formulario-nequi select,
 .formulario-nequi textarea {
     width: 100%;
     padding: 14px;
     border: 1px solid var(--borde-suave);
     border-radius: var(--radio-borde-medio);
-    font-size: 1em;
+    font-size: var(--font-size-medium);
     color: var(--texto-oscuro-principal);
-    background-color: var(--fondo-app);
+    background-color: var(--fondo-app); 
+    box-sizing: border-box; 
 }
-.formulario-nequi input:focus, .formulario-nequi textarea:focus {
+.formulario-nequi input:focus, 
+.formulario-nequi textarea:focus,
+.formulario-nequi select:focus {
     outline: none;
     border-color: var(--nequi-fucsia-principal);
     box-shadow: 0 0 0 2px rgba(236, 0, 140, 0.2);
@@ -275,22 +322,21 @@ main#app {
     min-height: 80px;
     resize: vertical;
 }
-.formulario-nequi.seccion-pedir-dinero input[type="tel"], /* Específico para tu vista */
-.formulario-nequi.seccion-pedir-dinero input[type="number"] {
-    margin-bottom: 10px;
-}
-.formulario-nequi.seccion-pedir-dinero textarea {
-    margin-bottom: 15px;
+.formulario-nequi .texto-ayuda-form {
+    font-size: var(--font-size-small);
+    color: var(--texto-gris-secundario);
+    text-align: center;
+    margin-top: 10px; 
 }
 
-.contenedor-centrado { /* Para login/registro */
+.contenedor-centrado { 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 120px); /* Ajustar si hay cabecera/nav visibles */
+    min-height: calc(100vh - 56px - 58px); 
     padding: 20px;
-    text-align: center; /* Para centrar texto de <p> */
+    text-align: center; 
 }
 .logo-login {
     width: 100px;
@@ -302,7 +348,7 @@ main#app {
 .lista-items-nequi {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Espacio entre tarjetas */
+    gap: 15px; 
 }
 
 
@@ -312,111 +358,108 @@ main#app {
     border-radius: var(--radio-borde-grande);
     padding: 18px;
     box-shadow: var(--sombra-tarjeta);
-    border-left: 5px solid transparent; /* Para estados en solicitudes */
+    border-left: 5px solid transparent; 
 }
 
-/* Estilos específicos para tarjeta-bolsillo */
 .tarjeta-bolsillo {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-start; 
     gap: 15px;
 }
 .tarjeta-bolsillo-icono {
-    font-size: 2.2em; /* Para el emoji 🐖 o un SVG */
+    font-size: 2em; 
     color: var(--nequi-fucsia-principal);
     margin-top: 2px;
-    min-width: 30px; /* Asegurar espacio para el icono */
+    min-width: 35px; 
     text-align: center;
-}
-.tarjeta-bolsillo-info {
-    flex-grow: 1;
 }
 .tarjeta-bolsillo-info h3 {
     margin: 0 0 6px 0;
     color: var(--nequi-morado-principal);
-    font-size: 1.1em;
+    font-size: var(--font-size-medium); 
     font-weight: 600;
 }
 .tarjeta-bolsillo-info .saldo {
     font-weight: bold;
-    font-size: 1.05em;
+    font-size: 1em; 
     color: var(--texto-oscuro-principal);
     margin-bottom: 4px;
 }
 .tarjeta-bolsillo-info .meta {
-    font-size: 0.85em;
+    font-size: var(--font-size-small);
     color: var(--texto-gris-secundario);
 }
 .tarjeta-bolsillo-acciones {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    align-items: flex-end; /* Alinea botones a la derecha */
+    align-items: flex-end; 
+    margin-left: auto; 
 }
-.btn-accion-bolsillo { /* Usado en tu JS como 'btn-abonar' y 'btn-retirar' */
+.btn-accion-bolsillo { 
     background-color: var(--nequi-fucsia-principal);
     color: white;
     border: none;
-    padding: 7px 14px;
+    padding: 8px 15px; 
     border-radius: var(--radio-borde-botones);
-    font-size: 0.85em;
-    font-weight: 500;
+    font-size: var(--font-size-small);
+    font-weight: 600; 
     cursor: pointer;
     min-width: 100px;
     text-align: center;
 }
-.btn-accion-bolsillo.btn-retirar { /* Clase específica para el botón de retirar */
+.btn-accion-bolsillo.btn-retirar { 
     background-color: transparent;
     color: var(--nequi-fucsia-principal);
     border: 1px solid var(--nequi-fucsia-principal);
 }
 
-
-/* Estilos específicos para tarjeta-solicitud */
 .tarjeta-solicitud .info-principal {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 8px;
+    flex-wrap: wrap; 
+    gap: 5px; 
 }
 .tarjeta-solicitud .quien strong { color: var(--nequi-morado-principal); }
 .tarjeta-solicitud .monto-solicitud strong {
     color: var(--nequi-fucsia-principal);
-    font-size: 1.15em; /* Más grande el monto */
+    font-size: var(--font-size-large); 
     font-weight: 700;
 }
 .tarjeta-solicitud .mensaje {
     font-style: italic;
     color: var(--texto-gris-secundario);
-    font-size: 0.9em;
+    font-size: var(--font-size-small);
     margin-bottom: 8px;
     padding-left: 10px;
     border-left: 3px solid var(--nequi-lila-suave);
-    word-break: break-word; /* Para mensajes largos */
+    word-break: break-word; 
 }
 .tarjeta-solicitud .fecha-solicitud, .tarjeta-solicitud .fecha-resolucion {
-    font-size: 0.8em;
+    font-size: 0.75em; 
     color: var(--texto-gris-claro);
     display: block;
     margin-top: 4px;
 }
- .tarjeta-solicitud .estado { /* Clase usada en el HTML generado */
-    font-weight: 500;
-    font-size: 0.9em;
+ .tarjeta-solicitud .estado { 
+    font-weight: 600; 
+    font-size: var(--font-size-small);
     margin-top: 5px;
     text-transform: capitalize;
 }
 .tarjeta-solicitud.estado-aceptada { border-left-color: #4CAF50; }
 .tarjeta-solicitud.estado-rechazada { border-left-color: var(--nequi-naranja-alerta); }
-.tarjeta-solicitud.estado-pendiente { border-left-color: #FFC107; } /* Amarillo Nequi o similar */
+.tarjeta-solicitud.estado-pendiente { border-left-color: #FFC107; }
 
-.tarjeta-solicitud .acciones { /* Para botones Pagar/Rechazar */
+.tarjeta-solicitud .acciones { 
     margin-top: 12px;
     display: flex;
     gap: 10px;
-    justify-content: flex-end; /* Botones a la derecha */
+    justify-content: flex-end; 
 }
-.tarjeta-solicitud .btn-accion { /* Clase usada en tu JS */
+.tarjeta-solicitud .btn-accion { 
     padding: 8px 18px;
     border-radius: var(--radio-borde-botones);
     border: 1px solid var(--nequi-fucsia-principal);
@@ -424,9 +467,9 @@ main#app {
     color: var(--nequi-fucsia-principal);
     font-weight: 600;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: var(--font-size-small);
 }
-.tarjeta-solicitud .btn-accion.btn-pagar { /* Clase usada en tu JS */
+.tarjeta-solicitud .btn-accion.btn-pagar { 
     background-color: var(--nequi-fucsia-principal);
     color: var(--texto-blanco);
 }
@@ -439,27 +482,28 @@ main#app {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    display: none; /* Se cambia a flex con JS */
+    display: none; 
     justify-content: center;
     align-items: center;
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.25s ease-in-out;
+    padding: 15px; 
 }
-.modal-nequi-superposicion.visible { /* Clase que añades con JS */
+.modal-nequi-superposicion.visible { 
     display: flex;
     opacity: 1;
 }
 .modal-nequi-contenido {
     background-color: var(--fondo-tarjeta);
-    padding: 25px 30px; /* Un poco más de padding */
+    padding: 25px; 
     border-radius: var(--radio-borde-grande);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    width: 90%;
-    max-width: 380px;
+    width: 100%; 
+    max-width: 380px; 
     display: flex;
     flex-direction: column;
-    gap: 18px; /* Espacio entre elementos del modal */
+    gap: 18px; 
     transform: translateY(20px);
     transition: transform 0.25s ease-in-out;
 }
@@ -475,15 +519,14 @@ main#app {
 }
 .modal-acciones {
     display: flex;
-    justify-content: space-between; /* Botones distribuidos */
     gap: 12px;
     margin-top: 15px;
 }
 .modal-acciones .btn-primario,
 .modal-acciones .btn-secundario {
-    width: auto; /* No ocupan todo el ancho */
-    flex-grow: 1; /* Para que se distribuyan si son 2 */
-    padding-top: 12px; /* Ajuste padding vertical */
+    width: auto; 
+    flex-grow: 1; 
+    padding-top: 12px; 
     padding-bottom: 12px;
 }
 
@@ -495,66 +538,81 @@ main#app {
     background-color: var(--nequi-lila-suave);
     border-radius: var(--radio-borde-botones);
     padding: 4px;
-    overflow: hidden;
+    overflow: hidden; 
 }
-.tab-btn { /* Clase usada en tu JS */
+.tab-btn { 
     flex-grow: 1;
-    padding: 10px 12px;
+    padding: 10px 5px; 
     text-align: center;
     background: transparent;
     border: none;
-    border-radius: calc(var(--radio-borde-botones) - 4px); /* Para que encaje dentro */
-    font-size: 0.9em;
+    border-radius: calc(var(--radio-borde-botones) - 4px); 
+    font-size: var(--font-size-small);
     font-weight: 600;
     color: var(--nequi-morado-principal);
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
-    outline: none; /* Quitar outline de foco */
+    outline: none; 
+    white-space: nowrap; 
 }
-.tab-btn.activo { /* Clase que añades con JS */
+.tab-btn.activo { 
     background-color: var(--nequi-fucsia-principal);
     color: var(--texto-blanco);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* ---- ESTILOS DASHBOARD/PANTALLA PRINCIPAL (Ejemplo de Paula) ---- */
-.dashboard-saldo-container {
+/* ---- ESTILOS PARA VISTA PRINCIPAL (Dashboard) ---- */
+.vista-principal-nequi .saldo-disponible-tarjeta {
     background: linear-gradient(135deg, var(--nequi-morado-principal) 0%, var(--nequi-fucsia-principal) 100%);
     color: var(--texto-blanco);
-    padding: 30px 20px;
+    padding: 25px 20px;
     border-radius: var(--radio-borde-grande);
     text-align: center;
     margin-bottom: 25px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
-.dashboard-saldo-container .etiqueta-saldo {
-    font-size: 0.9em;
+.vista-principal-nequi .saldo-disponible-tarjeta h2 { 
+    font-size: var(--font-size-small); 
     opacity: 0.8;
     margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-weight: 500; 
+    color: var(--texto-blanco); 
 }
-.dashboard-saldo-container .monto-saldo {
-    font-size: 2.5em;
+.vista-principal-nequi .monto-saldo-principal { 
+    font-size: 2.6em; 
     font-weight: 700;
     margin: 0;
     letter-spacing: -1px;
 }
+.vista-principal-nequi .indicador-actualizacion {
+    font-size: 0.7em; 
+    opacity: 0.7;
+    margin-top: 8px;
+}
 
-.dashboard-acciones-rapidas {
-    display: grid;
-    /* Ajustar para 2 columnas en móvil y más en pantallas grandes si se desea */
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas por defecto */
-    gap: 15px;
+.vista-principal-nequi .accesos-rapidos-nequi {
     margin-bottom: 25px;
 }
-.dashboard-acciones-rapidas .accion-btn { /* Clase usada en el HTML de vistaPrincipal */
+.vista-principal-nequi .accesos-rapidos-nequi h3 {
+    font-size: var(--font-size-large);
+    color: var(--nequi-morado-principal);
+    margin-bottom: 15px;
+    text-align: left; 
+}
+.vista-principal-nequi .grid-accesos { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+    gap: 12px; 
+}
+.vista-principal-nequi .btn-acceso-rapido { 
     background-color: var(--fondo-tarjeta);
     color: var(--nequi-morado-principal);
-    padding: 15px 10px;
-    border: none;
+    padding: 15px 10px; 
+    border: 1px solid var(--borde-suave);
     border-radius: var(--radio-borde-grande);
-    font-size: 0.85em; /* Ajustar tamaño de texto de botones de acción */
+    font-size: var(--font-size-small); 
     font-weight: 600;
     cursor: pointer;
     text-align: center;
@@ -564,27 +622,199 @@ main#app {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 90px; /* Altura mínima para que se vean bien */
+    gap: 8px; 
+    min-height: 100px; 
 }
-.dashboard-acciones-rapidas .accion-btn:hover {
+.vista-principal-nequi .btn-acceso-rapido:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
-.dashboard-acciones-rapidas .accion-btn img,
-.dashboard-acciones-rapidas .accion-btn svg {
-    width: 30px; /* Ajustar tamaño de iconos de acción */
-    height: 30px;
+.vista-principal-nequi .btn-acceso-rapido img,
+.vista-principal-nequi .btn-acceso-rapido svg {
+    width: 42px;  /* AUMENTADO */
+    height: 42px; /* AUMENTADO */
+    fill: currentColor; 
+    transition: transform 0.2s ease; 
 }
-.seccion-movimientos h3 { /* Usado en vistaPrincipal */
-    font-size: 1.1em;
-    color: var(--nequi-morado-principal);
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--nequi-lila-suave);
+.vista-principal-nequi .btn-acceso-rapido.deshabilitado {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--borde-suave);
+}
+.vista-principal-nequi .btn-acceso-rapido.deshabilitado:hover {
+    transform: none;
+    box-shadow: var(--sombra-tarjeta);
 }
 
-/* Clases de utilidad */
+.vista-principal-nequi .ultimos-movimientos-nequi h3 {
+    font-size: var(--font-size-large);
+    color: var(--nequi-morado-principal);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--nequi-lila-suave);
+    text-align: left;
+}
+.vista-principal-nequi .lista-movimientos .item-movimiento { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 12px 0; 
+    border-bottom: 1px solid var(--borde-suave);
+    font-size: var(--font-size-small);
+}
+.vista-principal-nequi .lista-movimientos .item-movimiento:last-child {
+    border-bottom: none;
+}
+.vista-principal-nequi .lista-movimientos .tipo-movimiento {
+    font-weight: 500;
+}
+.vista-principal-nequi .lista-movimientos .monto-movimiento.neg {
+    color: var(--nequi-naranja-alerta);
+    font-weight: 600; 
+}
+.vista-principal-nequi .lista-movimientos .monto-movimiento.pos {
+    color: #28a745; 
+    font-weight: 600; 
+}
+
+
+/* ---- ESTILOS PARA VISTA ENVIAR DINERO ---- */
+.seleccion-tipo-envio {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.seleccion-tipo-envio .instruccion {
+    margin-bottom: 15px;
+    font-size: var(--font-size-medium); 
+}
+.opciones-envio {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; 
+    gap: 20px; /* AUMENTADO gap para más separación */
+    flex-wrap: wrap; 
+}
+.btn-opcion-envio {
+    background-color: var(--fondo-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-borde-grande);
+    padding: 25px 20px; /* AUMENTADO padding */
+    width: calc(50% - 15px); /* Ajustado para el nuevo gap */
+    max-width: 180px; /* AUMENTADO max-width */
+    min-height: 150px; /* AUMENTADO min-height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    gap: 15px; /* AUMENTADO gap interno */
+    cursor: pointer;
+    box-shadow: var(--sombra-tarjeta);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none; 
+    color: var(--nequi-morado-principal); 
+}
+.btn-opcion-envio:hover {
+    transform: translateY(-4px); /* Aumentado efecto hover */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.12);
+}
+.btn-opcion-envio img {
+    height: 55px; /* AUMENTADO tamaño de logos */
+    max-width: 90px; 
+    object-fit: contain;
+}
+.btn-opcion-envio span {
+    font-weight: 600;
+    font-size: var(--font-size-medium); /* Texto del botón más grande */
+    text-align: center; 
+}
+.mensaje-confirmacion { 
+    padding: 12px;
+    border-radius: var(--radio-borde-medio);
+    font-weight: 500;
+    margin-top: 15px;
+    text-align: center;
+    font-size: var(--font-size-small);
+}
+
+
+/* ---- Clases de utilidad ---- */
 .oculto {
     display: none !important;
+}
+
+/* ---- MEDIA QUERIES PARA RESPONSIVIDAD ---- */
+
+/* Para pantallas pequeñas (móviles en landscape o tablets pequeñas) */
+@media (min-width: 480px) {
+    .formulario-nequi {
+        padding: 25px; 
+    }
+
+    .vista-principal-nequi .grid-accesos {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    }
+
+    .btn-opcion-envio {
+        /* Los tamaños ya son bastante generosos, podrían no necesitar mucho cambio aquí */
+        /* Podrías considerar aumentar el max-width si quieres que ocupen más en landscape */
+        max-width: 200px; 
+    }
+     .btn-opcion-envio img {
+        height: 60px; /* Un poco más grandes los logos */
+    }
+}
+
+/* Para tablets y pantallas un poco más grandes */
+@media (min-width: 768px) {
+    :root { 
+        --font-size-base: 17px;
+    }
+    
+    #cabecera-app h2 {
+        width: calc(100% - 120px); 
+    }
+
+    .formulario-nequi {
+        gap: 20px; 
+    }
+
+    .vista-principal-nequi .grid-accesos {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px;
+    }
+     .vista-principal-nequi .btn-acceso-rapido img,
+    .vista-principal-nequi .btn-acceso-rapido svg {
+        width: 44px;  /* Ligeramente más grandes */
+        height: 44px;
+    }
+
+    .opciones-envio {
+        gap: 25px; /* Más espacio entre opciones de envío */
+    }
+    .btn-opcion-envio {
+        max-width: 220px; /* Aún más grandes */
+        min-height: 160px;
+    }
+    .btn-opcion-envio img {
+        height: 65px;
+    }
+}
+
+/* Para pantallas más grandes (desktop pequeño) */
+@media (min-width: 992px) {
+    :root {
+        --font-size-base: 18px; 
+    }
+    /*#contenedor-principal-app { 
+       max-width: 450px; 
+       margin: 0 auto;
+       box-shadow: 0 0 30px rgba(0,0,0,0.1); 
+       min-height: 100vh; 
+       border-left: 1px solid var(--borde-suave); 
+       border-right: 1px solid var(--borde-suave);
+    }
+    */
+    .vista-principal-nequi .grid-accesos { 
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+    }
 }

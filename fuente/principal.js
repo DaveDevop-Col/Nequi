@@ -37,14 +37,26 @@ async function navegarHacia(ruta) {
     const controladorAuth = await import('./controladores/controladorAuth.js');
     const sesion = await controladorAuth.verificarSesionActual();
 
-    if (ruta === '/login' && !sesion) {
-        const { renderizarLogin } = await import('./vistas/vistaLogin.js');
-        renderizarLogin(divApp, controladorAuth, navegarHacia);
+        if (ruta === '/login' && !sesion) {
+        const moduloLogin = await import('./vistas/vistaLogin.js');
+        console.log("Contenido importado de vistaLogin.js:", moduloLogin); // DEBUG
+        if (moduloLogin && typeof moduloLogin.renderizarLogin === 'function') {
+            moduloLogin.renderizarLogin(divApp, controladorAuth, navegarHacia);
+        } else {
+            console.error("Error: renderizarLogin no es una función en el módulo importado o el módulo es undefined.");
+            divApp.innerHTML = "<p class='mensaje-error'>Error al cargar la pantalla de login. Revisa la consola.</p>";
+        }
         return;
     }
-    if (ruta === '/registro' && !sesion) {
-        const { renderizarRegistro } = await import('./vistas/vistaRegistro.js');
-        renderizarRegistro(divApp, controladorAuth, navegarHacia);
+        if (ruta === '/registro' && !sesion) {
+        const moduloRegistro = await import('./vistas/vistaRegistro.js');
+        console.log("Contenido importado de vistaRegistro.js:", moduloRegistro); // DEBUG
+        if (moduloRegistro && typeof moduloRegistro.renderizarRegistro === 'function') {
+            moduloRegistro.renderizarRegistro(divApp, controladorAuth, navegarHacia);
+        } else {
+            console.error("Error: renderizarRegistro no es una función en el módulo importado o el módulo es undefined.");
+            divApp.innerHTML = "<p class='mensaje-error'>Error al cargar la pantalla de registro. Revisa la consola.</p>";
+        }
         return;
     }
 
@@ -110,11 +122,11 @@ window.navegarHacia = navegarHacia; // Exponer globalmente para la consola y bot
 function configurarNavegacionInferior() {
     if (!navPrincipal) return;
     navPrincipal.innerHTML = `
-        <button data-ruta="/principal" title="Inicio"><img src="/iconos/casa.svg" alt="Inicio"> Inicio</button>
-        <button data-ruta="/bolsillos" title="Bolsillos"><img src="/iconos/bolsillos.svg" alt="Bolsillos"> Bolsillos</button>
-        <button data-ruta="/pedir-dinero" title="Pedir Dinero"><img src="/iconos/pedir.svg" alt="Pedir"> Pedir</button>
-        <button data-ruta="/enviar-dinero" title="Enviar Dinero"><img src="/iconos/enviar.svg" alt="Enviar"> Enviar</button>
-        <button data-ruta="/solicitudes" title="Notificaciones"><img src="/iconos/notificaciones.svg" alt="Campana"> Campana</button>
+        <button data-ruta="/principal" title="Inicio"><img src="publico/iconos/inicio.png" alt="Inicio"> Inicio</button>
+        <button data-ruta="/bolsillos" title="Bolsillos"><img src="publico/iconos/bolsillos.png" alt="Bolsillos"> Bolsillos</button>
+        <button data-ruta="/pedir-dinero" title="Pedir Dinero"><img src="/publico/iconos/pedir.png" alt="Pedir"> Pedir</button>
+        <button data-ruta="/enviar-dinero" title="Enviar Dinero"><img src="publico/iconos/enviar.png" alt="Enviar"> Enviar</button>
+        <button data-ruta="/solicitudes" title="Notificaciones"><img src="publico/iconos/notificaciones.png" alt="Campana"> Campana</button>
     `;
     navPrincipal.querySelectorAll('button[data-ruta]').forEach(btn => {
         btn.addEventListener('click', () => {

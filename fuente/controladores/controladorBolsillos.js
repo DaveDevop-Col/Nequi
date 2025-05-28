@@ -32,6 +32,12 @@ export async function obtenerSaldoPrincipalSimulado() { // La vista de bolsillos
    return saldoPrincipalSimulado;
 }
 
+export async function actualizarSaldoPrincipalSimulado(nuevoSaldo) {
+    console.log(`[CB SIM] Actualizando saldo principal a: ${nuevoSaldo}`);
+    saldoPrincipalSimulado = nuevoSaldo;
+
+    return true; 
+}
 export async function abonarABolsillo(idBolsillo, montoAAbonar) {
     console.log(`[CB SIM] Abonar $${montoAAbonar} a bolsillo ID: ${idBolsillo}`);
     montoAAbonar = parseFloat(montoAAbonar);
