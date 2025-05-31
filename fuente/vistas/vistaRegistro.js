@@ -1,6 +1,5 @@
 // Nequi/fuente/vistas/vistaRegistro.js
 import { supabase } from '../supabaseClient.js';
-import { registrarNuevoUsuario } from '../controladores/controladorAuth.js';
 
 export function renderizarRegistro(contenedorHTML, _controladorAuth, navegarHacia) {
     console.log("Renderizando vistaRegistro...");
@@ -43,7 +42,6 @@ export function renderizarRegistro(contenedorHTML, _controladorAuth, navegarHaci
         const fechaNacimiento = document.getElementById('fecha-nacimiento-registro').value;
         const password = document.getElementById('password-registro').value;
         const confirmarPassword = document.getElementById('confirmar-password-registro').value;
-        
         const btnCrearCuenta = document.getElementById('btn-crear-cuenta-registro');
 
         if (!nombre || !email || !telefono || !fechaNacimiento || !password || !confirmarPassword) {
@@ -58,36 +56,39 @@ export function renderizarRegistro(contenedorHTML, _controladorAuth, navegarHaci
             return;
         }
 
-        // Validación simple de teléfono (ej. 10 dígitos numéricos)
         if (!/^\d{10}$/.test(telefono)) {
             mensajeErrorDiv.textContent = "El número de celu debe tener 10 dígitos.";
             mensajeErrorDiv.classList.remove('oculto');
             return;
         }
-        
+
         btnCrearCuenta.disabled = true;
         btnCrearCuenta.textContent = 'Creando cuenta...';
 
-        const datosAdicionales = {
-            nombre_completo: nombre, // Supabase/controladorAuth espera 'nombre_completo'
-            telefono: telefono,
-            fecha_nacimiento: fechaNacimiento,
-            roll: 'usuario' // Rol por defecto al registrarse
-        };
+        // Lógica directa de registro con Supabase
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    nombre_completo: nombre,
+                    telefono: telefono,
+                    fecha_nacimiento: fechaNacimiento,
+                    roll: 'usuario'
+                }
+            }
+        });
 
-        // La función registrarNuevoUsuario ya la tienes en tu controladorAuth.js
-        const resultadoRegistro = await registrarNuevoUsuario(email, password, datosAdicionales);
-
-        if (resultadoRegistro.exito) {
-            // El alert de "Registro exitoso" ya está en controladorAuth.js
-            // En la simulación, dijimos que no se loguea automáticamente.
-            navegarHacia('/login'); 
-        } else {
-            mensajeErrorDiv.textContent = resultadoRegistro.mensaje || "Error al registrar la cuenta. Intenta de nuevo.";
+        if (error) {
+            mensajeErrorDiv.textContent = error.message || "Error al registrar la cuenta. Intenta de nuevo.";
             mensajeErrorDiv.classList.remove('oculto');
             btnCrearCuenta.disabled = false;
             btnCrearCuenta.textContent = 'Crear Cuenta';
+            return;
         }
+
+        alert("Registro exitoso. Revisa tu correo para confirmar tu cuenta.");
+        navegarHacia('/login');
     });
 
     btnIrALogin.addEventListener('click', () => {
