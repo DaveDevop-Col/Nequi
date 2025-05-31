@@ -1,5 +1,5 @@
 // Nequi/fuente/vistas/vistaRegistro.js
-import { supabase } from '../supabaseClient.js';
+import { supabase } from '../Clientesupabase.js';
 
 export function renderizarRegistro(contenedorHTML, _controladorAuth, navegarHacia) {
     console.log("Renderizando vistaRegistro...");
