@@ -1,4 +1,5 @@
 // Nequi/fuente/vistas/vistaRegistro.js
+import { supabase } from '../supabaseClient.js';
 import { registrarNuevoUsuario } from '../controladores/controladorAuth.js';
 
 export function renderizarRegistro(contenedorHTML, _controladorAuth, navegarHacia) {
