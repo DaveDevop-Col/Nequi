@@ -1,5 +1,6 @@
 // Nequi/fuente/vistas/vistaLogin.js
 import { iniciarSesionConEmail } from '../controladores/controladorAuth.js';
+import { supabase } from '../supabaseClient.js';
 
 export function renderizarLogin(contenedorHTML, _controladorAuth, navegarHacia) { // _controladorAuth no se usa directamente aquí si pasamos la función
     console.log("Renderizando vistaLogin...");
