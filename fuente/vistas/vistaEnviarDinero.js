@@ -1,4 +1,4 @@
-import { supabase } from '../supabase.js'; // Asegúrate de tener configurado esto
+import { supabase } from '../Clientesupabase.js'; // Asegúrate de tener configurado esto
 import { obtenerUsuarioActual } from '../utils/autenticacion.js'; // Esto debe retornar el usuario autenticado actual
 
 const cabeceraApp = document.getElementById('cabecera-app');
